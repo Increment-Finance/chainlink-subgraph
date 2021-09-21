@@ -1,5 +1,5 @@
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
-import { AnswerUpdated } from '../generated/EACAggregatorProxy';
+import { AnswerUpdated } from '../generated/AggregatorInterface';
 import { Price, PriceFeed } from '../generated/schema';
 import { logCritical } from '../utils/logCritical';
 import { updateDailyCandle, updateHourlyCandle, updateWeeklyCandle } from './Candle';
