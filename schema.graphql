@@ -105,3 +105,8 @@ type WeeklyCandle @entity {
   highPrice: BigInt!
   includedPrices: [Price!]!
 }
+
+type IndexedAggregator @entity {
+  id: ID!
+  assetPair: String!
+}

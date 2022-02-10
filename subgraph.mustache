@@ -11,20 +11,35 @@ dataSources:
     network: mainnet
     source:
       address: '{{{address}}}'
-      abi: AggregatorInterface
+      abi: AggregatorProxy
       startBlock: {{{block}}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities: []
-      file: ./src/mappings/feeds/{{{filename}}}.ts
+      file: ./src/mappings/aggregators/{{{filename}}}.ts
+      abis:
+        - name: AggregatorProxy
+          file: ./node_modules/@chainlink/contracts/abi/v0.7/AggregatorProxy.json
+      blockHandlers:
+        - handler: handleBlock
+  {{/pairs}}
+templates:
+  - name: Aggregator
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: AggregatorInterface
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities: []
+      file: ./src/mappings/feeds.ts
       abis:
         - name: AggregatorInterface
           file: ./node_modules/@chainlink/contracts/abi/v0.8/AggregatorInterface.json
       eventHandlers:
         - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
           handler: handleAnswerUpdated
-        - event: NewRound(indexed uint256,indexed address,uint256)
-          handler: handleNewRound
-  {{/pairs}}

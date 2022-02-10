@@ -1,0 +1,26 @@
+import { dataSource, Address, DataSourceContext, ethereum } from '@graphprotocol/graph-ts';
+
+import { AggregatorProxy } from '../../generated/AggregatorProxy';
+import { Aggregator } from '../../generated/templates';
+import { IndexedAggregator } from '../../generated/schema';
+
+function ensureAggregator(address: Address): void {
+  let indexedAggregator = IndexedAggregator.load(address.toHex()) as IndexedAggregator;
+  if (indexedAggregator) {
+    return;
+  }
+
+  let context = new DataSourceContext();
+  context.setString('tradingPair', '{{{pair}}}');
+  Aggregator.createWithContext(address, context);
+
+  indexedAggregator = new IndexedAggregator(address.toHex());
+  indexedAggregator.assetPair = '{{{pair}}}';
+  indexedAggregator.save();
+}
+
+export function handleBlock(block: ethereum.Block): void {
+  let aggregatorProxy = AggregatorProxy.bind(dataSource.address());
+  let aggregatorAddress = aggregatorProxy.aggregator();
+  ensureAggregator(aggregatorAddress);
+}

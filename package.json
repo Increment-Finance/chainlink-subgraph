@@ -8,13 +8,14 @@
     "create": "graph create melonproject/chainlink-fiat --node http://localhost:8020",
     "predeploy": "yarn create || true",
     "deploy": "graph deploy melonproject/chainlink-fiat subgraph.yaml --ipfs http://localhost:5001 --node http://localhost:8020",
+    "deploy:studio": "graph deploy --studio chainlink-mainnet",
     "release": "graph deploy melonproject/chainlink --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "format": "prettier --write {src,scripts}/{*,**/*}.{ts,json,yaml}",
     "lint": "yarn prettier --list-different {src,scripts}/{*,**/*}.{ts,json,yaml}"
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.2.1",
-    "@graphprotocol/graph-cli": "^0.19.0",
+    "@graphprotocol/graph-cli": "0.21.0",
     "@graphprotocol/graph-ts": "^0.19.0",
     "@types/mustache": "^4.0.1",
     "@types/node": "^14.14.3",

@@ -1,13 +1,12 @@
+import { dataSource } from '@graphprotocol/graph-ts';
 import { updateAggregates } from '../entities/Aggregate';
 import { createPrice } from '../entities/Price';
 import { ensurePriceFeed } from '../entities/PriceFeed';
-import { AnswerUpdated, NewRound } from '../generated/AggregatorInterface';
+import { AnswerUpdated } from '../generated/AggregatorProxy';
 
-export function handleAnswerUpdatedForPair(pair: string, event: AnswerUpdated): void {
+export function handleAnswerUpdated(event: AnswerUpdated): void {
+  let context = dataSource.context();
+  let tradingPair = context.getString('tradingPair');
   updateAggregates(event);
-  createPrice(event, ensurePriceFeed(event, pair));
-}
-
-export function handleNewRoundForPair(pair: string, event: NewRound): void {
-  // TODO: Do this later.
+  createPrice(event, ensurePriceFeed(event, tradingPair));
 }
