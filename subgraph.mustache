@@ -8,7 +8,7 @@ dataSources:
   {{#pairs}}
   - name: {{{name}}}
     kind: ethereum/contract
-    network: mainnet
+    network: {{{network}}}
     source:
       address: '{{{address}}}'
       abi: AggregatorProxy
@@ -28,7 +28,7 @@ dataSources:
 templates:
   - name: Aggregator
     kind: ethereum/contract
-    network: mainnet
+    network: {{network}}
     source:
       abi: AggregatorInterface
     mapping:
